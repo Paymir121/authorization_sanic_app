@@ -107,10 +107,10 @@ async def webhook(request):
         logger.info(f'1: {signature}, 2: {data["signature"]}')
         return json({'error 403.1': 'Неверная подпись'}, status=403)
 
-    create_transaction(transaction_id, account_id, user_id, amount, signature)
+    create_transaction(transaction_id, account_id, user_id, amount,)
     return json({'status': 'успешно обработано'}, status=200)
 
-def create_transaction(transaction_id, account_id, user_id, amount, signature):
+def create_transaction(transaction_id, account_id, user_id, amount,):
     """
     При обработке вебхука необходимо:
     Проверить существует ли у пользователя такой счет - если нет, его необходимо создать.

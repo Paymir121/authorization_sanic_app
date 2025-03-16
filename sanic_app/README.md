@@ -8,11 +8,11 @@
 
 ### Технологии
 Ножовка и шашлык
-Sanic
-SQLAlchemy
-Alembic
-Docker
-Python = 3.12
+* Sanic
+* SQLAlchemy
+* Alembic
+* Docker
+* Python = 3.12
 
 ### Запуск проекта в dev-режиме
 

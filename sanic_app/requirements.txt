@@ -1,0 +1,4 @@
+SQLAlchemy>=2.0.23
+psycopg2>=2.9.9 # Если запускается на Windows
+sanic
+alembic

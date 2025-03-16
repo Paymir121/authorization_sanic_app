@@ -1,46 +1,17 @@
 import hashlib
-from datetime import datetime, timedelta
 
-from sanic import Sanic, response
-from sanic.cookies import response
+from sanic import Sanic
 from sanic.response import text
 from sanic import json
 from sanic.log import logger
 from connection import DBConnection
 from models import User, Order, BankAccount
-
-"""Пользователь должен иметь следующие возможности:
-Авторизоваться по email/password
-Получить данные о себе(id, email, full_name)
-Получить список своих счетов и балансов
-Получить список своих платежей
-
-Администратор должен иметь следующие возможности:
-Авторизоваться по email/password
-Получить данные о себе (id, email, full_name)
-Создать/Удалить/Обновить пользователя
-Получить список пользователей и список его счетов с балансами
-
-"""
-
+from settings import SECRET_KEY
+from utlis import generate_jwt
 
 app: Sanic = Sanic("TestApplication")
 connection: DBConnection = DBConnection()
-SECRET_KEY = "gfdmhghif38yrf9ew0jkf32"
 
-def generate_jwt(user_id, jwt=None):
-    payload = {
-        'user_id': user_id,
-        'exp': datetime.utcnow() + timedelta(days=1)
-    }
-    return jwt.encode(payload, SECRET_KEY, algorithm='HS256')
-
-def generate_signature(data):
-    sorted_keys = sorted(data.keys())
-    sorted_values = ''.join(str(data[key]) for key in sorted_keys)
-    string_to_hash = f"{sorted_values}{SECRET_KEY}"
-    signature = hashlib.sha256(string_to_hash.encode()).hexdigest()
-    return signature
 
 @app.post("/authorization")
 async def authorization(request):
@@ -63,7 +34,7 @@ async def authorization(request):
 async def get_user(request, jwt=None):
     token = request.headers.get("Authorization")
     if not token:
-        return response.json({"error": "Authorization header is required"}, status=401)
+        return json({"error": "Authorization header is required"}, status=401)
 
     if not token:
         return text("errorAuthorization header is required")
@@ -90,7 +61,7 @@ async def get_user(request, jwt=None):
 async def list_users(request, jwt=None):
     token = request.headers.get("Authorization")
     if not token:
-        return response.json({"error": "Authorization header is required"}, status=401)
+        return json({"error": "Authorization header is required"}, status=401)
 
     if not token:
         return text("errorAuthorization header is required")

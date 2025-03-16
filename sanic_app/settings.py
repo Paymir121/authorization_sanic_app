@@ -1,0 +1,1 @@
+SECRET_KEY: str = "gfdmhghif38yrf9ew0jkf32"

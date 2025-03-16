@@ -38,6 +38,7 @@ Python = 3.12
     sanic api
 ```
 ### Запустите приложение докер
+не тестировал
 ```
     docker compose up --build
 ```
